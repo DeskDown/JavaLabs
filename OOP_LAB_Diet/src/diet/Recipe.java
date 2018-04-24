@@ -33,29 +33,45 @@ public class Recipe implements NutritionalElement {
 	public void addIngredient(String material, double quantity) {
 	}
 
+	@Override
 	public String getName() {
 		return null;
 	}
 
+	@Override
 	public double getCalories() {
 		return 0.0;
 	}
 
+	@Override
 	public double getProteins() {
 		return 0.0;
 	}
 
+	@Override
 	public double getCarbs() {
 		return 0.0;
 	}
 
+	@Override
 	public double getFat() {
 		return 0.0;
 	}
 
-  public boolean per100g() {
-	  // a recipe expressed nutritional values per 100g
-    return true;
-  }
+	/**
+	 * Indicates whether the nutritional values returned by the other methods
+	 * refer to a conventional 100g quantity of nutritional element,
+	 * or to a unit of element.
+	 * 
+	 * For the {@link Recipe} class it must always return {@code true}:
+	 * a recipe expressed nutritional values per 100g
+	 * 
+	 * @return boolean indicator
+	 */
+	@Override
+	public boolean per100g() {
+	    // a recipe expressed nutritional values per 100g
+		return true;
+	}
 
 }

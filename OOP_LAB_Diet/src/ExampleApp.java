@@ -7,6 +7,7 @@ import diet.Recipe;
 public class ExampleApp {
 
     public static void main(String[] args)  {
+    	
         Food food = new Food();
         food.defineRawMaterial("Sugar", 400, 0, 100, 0);
         food.defineRawMaterial("Mais", 70, 2.7, 12, 1.3);

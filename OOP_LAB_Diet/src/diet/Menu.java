@@ -2,7 +2,8 @@ package diet;
 
 /**
  * Represents a complete menu.
- * It consist of packaged products and servings of recipes.
+ * 
+ * It can be made up of both packaged products and servings of given recipes.
  *
  */
 public class Menu implements NutritionalElement {
@@ -39,26 +40,42 @@ public class Menu implements NutritionalElement {
 	public void addProduct(String product) {
 	}
 
+	@Override
 	public String getName() {
 		return null;
 	}
 
+	@Override
 	public double getCalories() {
 		return 0.0;
 	}
 
+	@Override
 	public double getProteins() {
 		return 0.0;
 	}
 
+	@Override
 	public double getCarbs() {
 		return 0.0;
 	}
 
+	@Override
 	public double getFat() {
 		return 0.0;
 	}
 
+	/**
+	 * Indicates whether the nutritional values returned by the other methods
+	 * refer to a conventional 100g quantity of nutritional element,
+	 * or to a unit of element.
+	 * 
+	 * For the {@link Menu} class it must always return {@code false}:
+	 * nutritional values are provided for the whole menu.
+	 * 
+	 * @return boolean indicator
+	 */
+	@Override
 	public boolean per100g() {
 		// nutritional values are provided for the whole menu.
 		return false;

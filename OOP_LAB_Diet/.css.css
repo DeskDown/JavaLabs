@@ -39,8 +39,8 @@ h1  {
 h2  {
     /*float: left;*/
     margin-top: 0;
-    padding: 5px 15px 5px 0px;
-    line-height: 0.8em;
+    padding: 10px 15px 10px 0px;
+    line-height: 0.9em;
 	color: RoyalBlue;
 	font-family: sans-serif;
 	border-top: 1px dotted gray;
@@ -56,18 +56,36 @@ td, th  {
 	padding: 1px 5px 1px 5px;
 	}
 tr:nth-child(even) {
-    background-color: PowderBlue;
+    background-color:aliceblue;
     margin: 1pt solid PowderBlue;
 	}
+
+ul.hint {
+    list-style: none; /* Remove list bullets */
+    padding: 0;
+    margin: 0;
+}
+
+.hint li { 
+    padding-left: 2em;
+    padding-bottom: 3pt;
+}
+
+
+.hint li:before {
+    content: "\01f4a1";
+    margin-left: -1.75em;
+    display: inline-block;
+    width: 1.5em;
+}
+
+
 footer {
 	font-family: sans-serif;
 	text-align: right;
-	font-size: 6pt;
+	font-size: 8pt;
 	margin-top: 1em;
+    padding: 2pt 1em;
 	border-top: 1pt solid Navy;
     border-bottom: 2pt solid Navy;
-	}
-strong {
-	text-weight: bold;
-	font-family: sans-serif;
 	}
