@@ -7,11 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import schools.Region;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
-public class TestR4_Queries extends TestCase {
+public class TestR4_Queries {
 
 	Region r ;
+	@Before
 	public void setUp() throws IOException{
 		r = new Region("Piemonte");		
 		r.readData  (TestR3_ReadData.url);
@@ -22,6 +25,7 @@ public class TestR4_Queries extends TestCase {
 	 * and the number of corresponding schools as the value
 	 * 
 	 */
+	@Test
 	public void testCountSchoolsPerDescription(){
 		Map<String,Long> res = r.countSchoolsPerDescription();
 		
@@ -39,6 +43,7 @@ public class TestR4_Queries extends TestCase {
 	 * and the number of branches in that municipality
 	 * as the value. 
 	 */
+	@Test
 	public void testCountBranchesPerMunicipality(){
 		Map<String,Long> res = r.countBranchesPerMunicipality();
 		
@@ -55,6 +60,7 @@ public class TestR4_Queries extends TestCase {
 	 * If a school has more than one branch in the municipality
 	 * it must be counted only once. 
 	 */
+	@Test
 	public void testCountSchoolsPerMunicipality(){
 		Collection<String> res=r.countSchoolsPerMunicipality();
 		
@@ -81,6 +87,7 @@ public class TestR4_Queries extends TestCase {
 	 * The strings has to be sorted in descending order
 	 * by the number of schools. 
 	 */
+	@Test
 	public void testCountSchoolsPerCommunity(){
 		List<String> res = r.countSchoolsPerCommunity();
 		
@@ -95,6 +102,7 @@ public class TestR4_Queries extends TestCase {
 	 * provincia e come valore la media del numero di sedi per comune.
 	 * @return
 	 */
+	@Test
 	public void testAverageBranchesPerMunicipality(){
 		Map<String,Double> res = r.averageBranchesPerMunicipality();
 		assertNotNull("Missing count of branches per municipality",res);

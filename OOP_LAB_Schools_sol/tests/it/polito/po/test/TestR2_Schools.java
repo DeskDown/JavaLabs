@@ -7,9 +7,12 @@ import schools.Community;
 import schools.Region;
 import schools.School;
 import schools.Branch;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
-public class TestR2_Schools extends TestCase {
+
+public class TestR2_Schools {
 	private static final String COM_MONTANA = "ALTA VALLE SUSA";
 	private static final String COM_COLLINARE = "ALTO MONFERRATO";
 	Region r;
@@ -19,6 +22,7 @@ public class TestR2_Schools extends TestCase {
 	Municipality m1;
 	Municipality m2;
 
+	@Before
 	public void setUp() {
 		r = new Region("Piemonte");
 		cm = r.newCommunity(COM_MONTANA, Community.Type.MONTANA);
@@ -28,6 +32,7 @@ public class TestR2_Schools extends TestCase {
 		m2 = r.newMunicipality("Nizza Monferrato", "ASTI", cc);
 	}
 
+	@Test
 	public void testSchool() {
 		School s = r.newSchool("School Media Pinocchio", "SM1234", 2, "School Media Statale");
 
@@ -41,6 +46,7 @@ public class TestR2_Schools extends TestCase {
 					"School Media Statale", s.getDescription());
 	}
 
+	@Test
 	public void testBranch() {
 		School s = r.newSchool("School Media Pinocchio", "SM1234", 2, "School Media Statale");
 		Branch b = r.newBranch(12345, m0, "Via Collodi 1", 10199, s);
@@ -54,6 +60,7 @@ public class TestR2_Schools extends TestCase {
 		assertEquals("Wrong branch zip code",10199, b.getCAP());
 	}
 
+	@Test
 	public void testGetSchools() {
 		School s1 = r.newSchool("School Media Pinocchio", "SM1234", 2, "School Media Statale");
 		School s2 = r.newSchool("School Media Mangiafuoco", "SM1A76", 2, "School Primaria");
@@ -66,6 +73,7 @@ public class TestR2_Schools extends TestCase {
 		assertTrue("Missing school",ls.contains(s2));
 	}
 
+	@Test
 	public void testGetBranches() {
 		School s1 = r.newSchool("School Media Pinocchio", "SM1234", 2, "School Media Statale");
 		School s2 = r.newSchool("School Media Mangiafuoco", "SM1A76", 2, "School Primaria");

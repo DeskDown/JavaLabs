@@ -2,17 +2,23 @@ package it.polito.po.test;
 
 import java.util.Collection;
 import schools.*;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
-public class TestR1_Municipality extends TestCase {
+public class TestR1_Municipality  {
     private static final String MOUNTAINT_COMMUNITY = "ALTA VALLE SUSA";  // mountain community
 	private static final String HILL_COMMUNITY = "ALTO MONFERRATO";
 	Region r ;
+	
+	@Before
 	public void setUp(){
 		
 		r = new Region("Piemonte");
 		
 	}
+	
+	@Test
 	public void testCommunity(){	
 		Community cm = r.newCommunity(MOUNTAINT_COMMUNITY, Community.Type.MONTANA);
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);
@@ -30,6 +36,7 @@ public class TestR1_Municipality extends TestCase {
 		assertEquals("Wrong type for hil community",
 					Community.Type.COLLINARE,cc.getType());
 	}
+	@Test
 	public void testGetCommunity(){	
 		Community cm = r.newCommunity(MOUNTAINT_COMMUNITY, Community.Type.MONTANA);
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);
@@ -41,6 +48,7 @@ public class TestR1_Municipality extends TestCase {
 		assertTrue("Missing a community",lc.contains(cm));
 		assertTrue("Missing a community",lc.contains(cc));
 	}
+	@Test
 	public void testMunicipalityConCommunity(){	
 		Community cm = r.newCommunity(MOUNTAINT_COMMUNITY, Community.Type.MONTANA);
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);
@@ -68,6 +76,7 @@ public class TestR1_Municipality extends TestCase {
 		assertEquals("Wrong community for municipality", 
 					cc,c2.getCommunity().get());
 	}
+	@Test
 	public void testMunicipalityNoCommunity(){	
 		Municipality c1 = r.newMunicipality("Torino","TORINO");
 		Municipality c2 = r.newMunicipality("Nizza Monferrato","ASTI");
@@ -84,6 +93,7 @@ public class TestR1_Municipality extends TestCase {
 					"TORINO",c1.getProvince());
 	}
 	
+	@Test
 	public void testGetMunicipality(){	
 		Community cm = r.newCommunity(MOUNTAINT_COMMUNITY, Community.Type.MONTANA);
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);

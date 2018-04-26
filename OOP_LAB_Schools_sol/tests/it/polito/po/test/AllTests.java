@@ -1,22 +1,11 @@
 package it.polito.po.test;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
+import org.junit.runners.Suite.SuiteClasses;
 
+@RunWith(Suite.class)
+@SuiteClasses({ TestR1_Municipality.class, TestR2_Schools.class, TestR3_ReadData.class, TestR4_Queries.class })
 public class AllTests {
-	
-	
-
-	public static Test suite() {
-		
-		TestSuite suite = new TestSuite(AllTests.class.getName());
-		//$JUnit-BEGIN$
-		suite.addTestSuite(TestR1_Municipality.class);
-		suite.addTestSuite(TestR2_Schools.class);
-		suite.addTestSuite(TestR3_ReadData.class);
-		suite.addTestSuite(TestR4_Queries.class);
-		//$JUnit-END$
-		return suite;
-	}
 
 }

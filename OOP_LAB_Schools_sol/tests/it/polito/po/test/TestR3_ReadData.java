@@ -13,9 +13,11 @@ import schools.Municipality;
 import schools.Community;
 import schools.Region;
 import schools.School;
-import junit.framework.TestCase;
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
 
-public class TestR3_ReadData extends TestCase {
+public class TestR3_ReadData {
 	
 	final static String url;
 	static {
@@ -46,11 +48,14 @@ public class TestR3_ReadData extends TestCase {
 	}
 	
 	Region r ;
+
+	@Before
 	public void setUp() throws IOException{
 		r = new Region("Piemonte");
 	}
 	
 	
+	@Test
 	public void testCommunity() throws IOException{
 		r.readData(url);
 		
@@ -63,6 +68,7 @@ public class TestR3_ReadData extends TestCase {
 		assertEquals("Wrong numner of mountain communities",48,counts.get(Community.Type.MONTANA).longValue());
 	}
 
+	@Test
 	public void testMuniciaplities() throws IOException{
 		r.readData(url);
 		
@@ -74,6 +80,7 @@ public class TestR3_ReadData extends TestCase {
 		assertEquals("Wrong number of provinces",8,numProvinces);
 	}
 
+	@Test
 	public void testSchools() throws IOException{
 		r.readData(url);
 		
