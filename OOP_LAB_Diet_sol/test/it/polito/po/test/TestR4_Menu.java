@@ -1,13 +1,17 @@
 package it.polito.po.test;
-import diet.*;
-import junit.framework.TestCase;
 
-public class TestR4_Menu extends TestCase {
+import org.junit.Test;
+import org.junit.Before;
+import static org.junit.Assert.*;
+import diet.*;
+
+public class TestR4_Menu {
 
 
   private Food food;
   private Recipe r;
 
+  @Before
   public void setUp() throws Exception {
     food = new Food();
     food.defineRawMaterial("Zucchero", 400, 0, 100, 0);
@@ -24,6 +28,7 @@ public class TestR4_Menu extends TestCase {
     r.addIngredient("Nutella", 30);
   }
 
+  @Test
   public void testMenuWithRecipe() {
     Menu menu = new Menu("M1", food);
 
@@ -36,6 +41,7 @@ public class TestR4_Menu extends TestCase {
     assertEquals(1.5 * 0.7 + 31 * 0.3, menu.getFat(), 0.001);
   }
 
+  @Test
   public void testMenu() {
     Menu menu = new Menu("M1", food);
 

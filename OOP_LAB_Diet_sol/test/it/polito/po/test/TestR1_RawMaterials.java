@@ -1,13 +1,15 @@
 package it.polito.po.test;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+import diet.*;
 import java.util.Collection;
 import java.util.Iterator;
 
-import diet.*;
-import junit.framework.TestCase;
 
+public class TestR1_RawMaterials {
 
-public class TestR1_RawMaterials extends TestCase {
-
+  @Test
   public void testDefinition(){
   	Food dieta = new Food();
   	
@@ -19,6 +21,7 @@ public class TestR1_RawMaterials extends TestCase {
 	assertEquals(1,finalSize);
   }
   
+  @Test
   public void testRawMaterialsCollection(){
 	Food dieta = new Food();
   	
@@ -36,6 +39,7 @@ public class TestR1_RawMaterials extends TestCase {
 	assertTrue(en.per100g());
   }
 
+  @Test
   public void testRawMaterials(){
 	Food dieta = new Food();
 	dieta.defineRawMaterial("Pasta", 350, 12, 72.2, 1.5);
@@ -48,7 +52,8 @@ public class TestR1_RawMaterials extends TestCase {
 	assertEquals(1.5,en.getFat(),0.001); 
 	assertTrue(en.per100g());
   }
-  
+
+  @Test
   public void testRawMaterialsCollectionsSorted(){
 	Food dieta = new Food();
   	

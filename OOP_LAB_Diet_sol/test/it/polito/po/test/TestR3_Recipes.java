@@ -1,10 +1,13 @@
 package it.polito.po.test;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
 import diet.*;
-import junit.framework.TestCase;
 
 
-public class TestR3_Recipes extends TestCase {
+public class TestR3_Recipes {
 
+  @Test
   public void testCreateRecipe() {
   	Food dieta = new Food();
 
@@ -14,6 +17,7 @@ public class TestR3_Recipes extends TestCase {
 	assertEquals(1,dieta.recipes().size());
   }
 
+  @Test
   public void testRecipe() {
 	Food dieta = new Food();
 	dieta.defineRawMaterial("Zucchero", 400, 0, 100, 0);
@@ -33,6 +37,7 @@ public class TestR3_Recipes extends TestCase {
 	assertTrue(r.per100g());
   }
 	
+  @Test
   public void testRecipe2() {
 	Food dieta = new Food();
 	dieta.defineRawMaterial("Zucchero", 400, 0, 100, 0);

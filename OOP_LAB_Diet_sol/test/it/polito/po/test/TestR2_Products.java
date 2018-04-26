@@ -3,11 +3,13 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import diet.*;
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 
-public class TestR2_Products extends TestCase {
+public class TestR2_Products {
 
+  @Test
   public void testDefinition(){
   	Food food = new Food();
   	
@@ -19,6 +21,7 @@ public class TestR2_Products extends TestCase {
 	assertEquals(1,finalSize);
   }
   
+  @Test
   public void testProductColleciton(){
 	Food food = new Food();
   	
@@ -36,6 +39,7 @@ public class TestR2_Products extends TestCase {
 	assertFalse(en.per100g());
   }
 
+  @Test
   public void testProduct(){
 	Food food = new Food();
 	food.defineProduct("Cracker", 111, 2.6, 17.2, 3.5);
@@ -49,6 +53,7 @@ public class TestR2_Products extends TestCase {
 	assertFalse(en.per100g());
   }
   
+  @Test
   public void testProductCollectionSorted(){
 	Food food = new Food();
   	
