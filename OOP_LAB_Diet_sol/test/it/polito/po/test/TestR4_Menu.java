@@ -29,10 +29,11 @@ public class TestR4_Menu extends TestCase {
 
     menu.addRecipe("Pasta e Nutella", 100);
 
-    assertEquals(350 * 0.7 + 530 * 0.3, r.getCalories(), 0.001);
-    assertEquals(12 * 0.7 + 6.8 * 0.3, r.getProteins(), 0.001);
-    assertEquals(72.2 * 0.7 + 56 * 0.3, r.getCarbs(), 0.001);
-    assertEquals(1.5 * 0.7 + 31 * 0.3, r.getFat(), 0.001);
+    assertEquals("M1",menu.getName());
+    assertEquals(350 * 0.7 + 530 * 0.3, menu.getCalories(), 0.001);
+    assertEquals(12 * 0.7 + 6.8 * 0.3, menu.getProteins(), 0.001);
+    assertEquals(72.2 * 0.7 + 56 * 0.3, menu.getCarbs(), 0.001);
+    assertEquals(1.5 * 0.7 + 31 * 0.3, menu.getFat(), 0.001);
   }
 
   public void testMenu() {
