@@ -65,7 +65,7 @@ public class LineUtils {
 			}
 			return loadLines(filename);
 		} catch (IOException e) {
-			System.err.println("Detected and error while downloading url: " + url);
+			System.err.println("Detected an error while downloading url: " + url);
 			return null;
 		}
 	}
@@ -86,7 +86,7 @@ public class LineUtils {
 				rows.add(line);
 			}
 		}catch(IOException e){
-			System.err.println("Detected and error while reading file: " + file);
+			System.err.println("Detected an error while reading file: " + file);
 			return null;
 		}
 		return rows;

@@ -74,7 +74,7 @@ ul.hint {
 
 .hint li:before {
     content: "\01f4a1";
-    margin-left: -1.5em;
+    margin-left: -1.75em;
     display: inline-block;
     width: 1.5em;
 }
