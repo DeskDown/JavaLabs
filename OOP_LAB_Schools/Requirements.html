@@ -3,7 +3,7 @@
 <head>
   <link href=".css.css" rel="stylesheet" type="text/css">
   <title>Lab - Schools</title>
-  <meta name="revision" content="May 9, 2017">
+  <meta name="revision" content="May 7, 2018">
   <meta name="author" content="Marco Torchiano">
 </head>
 <body>
@@ -131,12 +131,12 @@ are repeated more than once.
 The columns <i>Comunita Collinare</i> (hill community) and <i>Comunita Montana</i> (mount community) 
 can contain the name of the community or be empty when the municipality does not belong to any community.
 <p>
+<!--
 The column <i>Grado Scolastico</i> (school grade) contains both a number and a description (e.g. <i>"2 - Scuola primaria"</i>)
 to create a <i>School</i> object, only the number before the <i>'-'</i> character is required.
-
+-->
 <p>
-The data relative to the Piedmont regional schools is available at the URL:
-<i>http://oop.polito.it/svn/OOPLabs/master/Data/schools.csv</i> <sup>(<a href="#note"> * </a>)</sup>.
+The data relative to the Piedmont regional schools is availabl in file <i>schools.csv</i> <sup>(<a href="#note"> * </a>)</sup>.
  
 <p>
 <h4>Hints:</h4>
@@ -145,6 +145,11 @@ The data relative to the Piedmont regional schools is available at the URL:
 <li>While reading the file, for each row, it is required, before creating a new branch,
 to crate first the community (if any and if not present), then the municipality
 (if not present yet), and the school (if not present yet).
+
+<li>To read the file file, you can start from the code fragment already presend in 
+method <i>readData()</i> that reads the rows of the file and adds them to a list.
+The first row contains the headers, while the following ones
+contain the real data.
 
 <li>For reading the lines from a file the method <i>loadLinesUrl()</i>
 from class <i>it.polito.utility.LineUtils</i> that is already provided inside
@@ -171,6 +176,10 @@ corresponding to that description.
 The method <b>countBranchesPerMunicipality()</b> returns a map containing
 as key the name of the municipality and as value the number
 of branches belonging to it.
+<p>
+The method <b>countBranchesPerMunicipalityPerProvince()</b> returns a map
+have as key the  province and as value another map that links a municipality 
+(of the province) to the relative number of school branches.
 <p>
 The method <b>averageBranchesPerMunicipality()</b> returns a map containing as key the name of the province
 and as value the average number of branches in the municipalities of that province.
