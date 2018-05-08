@@ -24,7 +24,7 @@ import static java.util.stream.Collectors.*;
 public class Region {
 	
 	/**
-	 * Constructor
+	 * Creates a new region with the given name.
 	 * @param name the name of the region
 	 */
 	public Region(String name){
@@ -162,7 +162,7 @@ public class Region {
 	}
 
 	/**
-	 * Counts how many school there exist for each description
+	 * Counts how many schools there exist for each description
 	 * @return a map of school count vs. description
 	 */
 	public Map<String,Long>countSchoolsPerDescription(){
