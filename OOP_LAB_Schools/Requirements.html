@@ -16,7 +16,7 @@ All the classes must be in the package "<b>schools</b>".
 
 <h2>R1 - Municipalities and Communities</h2>
 <p>
-The interaction with the system takes place through class <b>Region</b>.
+The interaction with the system takes place through class <b>Region</b> that manages communities and municipalities.
 <br>
 The definition of a community can be performed using the <b>newCommunity()</b>
 method that accepts as arguments the name and a <b>Community.Type</b> value
@@ -200,7 +200,7 @@ Only the schools having at least a branch in a municipality that belongs to a co
 <li>When sorting elements in reverse order, based on an attribute,
 it is better to use the form <i>comparing(Element::getValue,reverseOrder())</i>
 than <i>comparing(Element::getValue).reversed()</i> because this latter
-form is more difficult for the compiler to correctly infer the types.
+form makes it difficult for the compiler to infer the types.
 </ul>
 
 <footer id="note">

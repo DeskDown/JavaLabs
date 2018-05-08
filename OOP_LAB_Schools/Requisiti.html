@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head lang="it">
   <link href=".css.css" rel="stylesheet" type="text/css">
-
+  <meta charset="utf-8">
   <title>Laboratorio - Scuole</title>
   <meta name="revision" content="7 Maggio 2018">
   <meta name="author" content="Marco Torchiano">
@@ -20,27 +20,28 @@ Tutte le classi devono essere nel package "<b>schools</b>".
 
 <h2>R1 - Comuni e comunit&agrave;<br>
 </h2>
-L'interazione con il sistema avviene tramite la classe <b>Region</b>.
+L'interazione con il sistema avviene tramite la classe <b>Region</b> che permette di gestire comunit&agrave; e comuni.
 <br>
 Per definire una comunit&agrave; si usa il metodo <b>newCommunity()</b>
 che riceve come parametri il nome e un <b>Community.Type</b> che indica se la
 comunit&agrave; &egrave; montana o collinare.
-<br/>
 Il metodo restistuisce un oggetto di classe <b>Community</b>.
 <p>
 Per definire un comune, si utilizza il metodo <b>newMunicipality()</b> che riceve
 come parametri il nome, la provincia e un riferimento (opzionale) alla eventuale 
 comunit&agrave; di appartenenza.
-<br/>
 Il metodo restistuisce un oggetto di classe <b>Municipality</b>
 <p>
 Entrambe le classi offrono gli ovvi metodi getter.
-<br>
+<p>
 &Egrave; possibile ottenere le collezioni di comuni e comunit&agrave;
-tramite i metodi <b>getMunicipalities()</b> e <b>getCommunities()</b> situati nelle 
-rispettive classi. Il metodo <i>getCommunity()</i> della classe <i>Municipality</i> restituisce 
+tramite i metodi <b>getMunicipalities()</b> e <b>getCommunities()</b>.
+<br>
+Il metodo <b>getCommunity()</b> della classe <i>Municipality</i> restituisce 
 un <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html"><i>Optional</i></a>
-che &egrave; vuoto se il comune non appartiene ad alcuna comunit&agrave;.
+che &egrave; vuoto (<i>empty</i>) se il comune non appartiene ad alcuna comunit&agrave;.
+Viceversa, data una <i>Community</i> è possibile ottenere la collezione
+dei comuni che vi appartengono tramite il metodo <b>getMunicipalities()</b>. 
 </p>
 
 <h4>Suggerimenti</h4>
@@ -50,12 +51,12 @@ che &egrave; vuoto se il comune non appartiene ad alcuna comunit&agrave;.
     con la sintassi <i>EnumName.VALUE</i>, dove il nome dell'enum &egrave; il nome completo.
     </li>
 <li>La classe <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html"><i>Optional</i></a>
-    viene utilizzata per segnalare esplicitamente che un valore pu&ograve; essere assente (<i>isPresent()</i> indica
-    se un valore &egrave; presente nell'optional).<p>
+    viene utilizzata per segnalare esplicitamente che un valore pu&ograve; essere <i>null</i>. 
+    Il metodo <i>isPresent()</i> indica se &egrave; presente un valore nell'optional).<p>
     
     Per creare un <i>Optional</i> a partire da una variable che potrebbe essere <i>null</i> 
 	si pu&ograve; usare <i>Optional.ofNullable()</i> che  restituisce un <i>Optional</i> contenente 
-	la variabile oppure un <i>Optional</i> vuoto se la variabile &egrave; <i>null</i>. 
+	la variabile oppure un <i>Optional</i> vuoto se la variabile &egrave; <i>null</i>.
 </ul>
 
 
@@ -64,13 +65,13 @@ che &egrave; vuoto se il comune non appartiene ad alcuna comunit&agrave;.
 Le scuole vengono definite tramite il metodo <b>newSchool()</b>
 che accetta come parametri la denominazione, il codice ministeriale (univoco), 
 il grado e la descrizione.
-<br/>
+
 Il metodo restistuisce un oggetto di classe <b>School</b>
 <p>
 Le scuole possono avere diverse sedi che vengono definite tramite
 il metodo <b>newBranch()</b> che riceve come parametri il codice (univoco), 
  un riferimento al comune in cui si trova, l'indirizzo, 
-il cap, e un riferimento alla scuola di cui fa parte.
+il cap e un riferimento alla scuola di cui fa parte.
 <br/>
 Il metodo restistuisce un oggetto di classe <b>Branch</b>
 <p>

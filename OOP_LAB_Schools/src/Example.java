@@ -1,5 +1,4 @@
 
-
 import schools.Branch;
 import schools.Community;
 import schools.Municipality;

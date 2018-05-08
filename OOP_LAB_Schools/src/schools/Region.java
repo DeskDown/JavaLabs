@@ -15,7 +15,10 @@ import static java.util.stream.Collectors.*;
 
 /**
  * Represents the region and serves as a facade class
+ * for the package.
  * 
+ * It provides factory methods for creating instances of
+ * {@link Community}, {@link Municipality}, {@link School}, and {@link Branch}
  *
  */
 public class Region {
@@ -65,6 +68,7 @@ public class Region {
 	/**
 	 * Factory method that build a new community of the given type.
 	 * The type is {@link Community.Type}
+	 * 
 	 * @param name name of the community
 	 * @param type type of the community
 	 * @return the new created community
@@ -75,6 +79,7 @@ public class Region {
 
 	/**
 	 * Factory method that build a new municipality.
+	 * 
 	 * @param nome 		name of the municipality
 	 * @param province 	province of the municipality
 	 * @return the new created municipality
@@ -86,6 +91,7 @@ public class Region {
 	/**
 	 * Factory methods, that build a new municipality that
 	 * is part of a community.
+	 * 
 	 * @param nome 		name of the municipality
 	 * @param province 	province of the municipality
 	 * @param comunita  community the municipality belongs to 
@@ -97,11 +103,13 @@ public class Region {
 	
 	/**
 	 * Factory method that creates a new school
+	 * 
 	 * @param name    name of the school
 	 * @param code    code of the school
 	 * @param grade	  grade of the school (1 to 4)
 	 * @param description  description of the school
-	 * @return
+	 * 
+	 * @return a new school object
 	 */
 	public School newSchool(String name, String code, int grade, String description){
 		return null;
@@ -124,20 +132,22 @@ public class Region {
 	
 	/**
 	 * Load data from a file.
-	 * The file must be a CSV file containing the following fields:
+	 * 
+	 * The file must be a CSV file and it is supposed to contain the following fields:
 	 * <ul>
-	 *  <li>Provincia,   (province)
-	 *  <li>Comune,		(municipality)
-	 *  <li>Grado Scolastico, (school grade)
-	 *  <li>Descrizione Scuola, (school description)
-	 *  <li>Cod Sede, (branch code)
-	 *  <li>Cod Scuola, (school code)
-	 *  <li>Denominazione Scuola, (name of the school)
-	 *  <li>Indirizzo e n. civico, (address of the branch)
-	 *  <li>C.A.P., (zip code of the branch)
-	 *  <li>Comunita Collinare, (Hill community)
-	 *  <li>Comunita Montana  (Mountain community)
+	 *  <li>{@code "Provincia"},   (province)
+	 *  <li>{@code "Comune"},		(municipality)
+	 *  <li>{@code "Grado Scolastico"}, (school grade)
+	 *  <li>{@code "Descrizione Scuola"}, (school description)
+	 *  <li>{@code "Cod Sede"}, (branch code)
+	 *  <li>{@code "Cod Scuola"}, (school code)
+	 *  <li>{@code "Denominazione Scuola"}, (name of the school)
+	 *  <li>{@code "Indirizzo e n. civico"}, (address of the branch)
+	 *  <li>{@code "C.A.P."}, (zip code of the branch)
+	 *  <li>{@code "Comunita Collinare"}, (Hill community)
+	 *  <li>{@code "Comunita Montana"},  (Mountain community)
 	 * </ul>
+	 * 
 	 * @param file the path of the file
 	 */
 	public void readData(String file) {
@@ -169,7 +179,7 @@ public class Region {
 
 	/**
 	 * Counts the number of school branches per municipality
-	 * grouped by province.
+	 * and groups them by province.
 	 * @return a map of maps the inner reports count of branches vs. municipality
 	 * 			the outer reports provinces as keys
 	 */
@@ -180,12 +190,13 @@ public class Region {
 
 	/**
 	 * returns a list of strings with format
-	 * {@code ### - XXXXXX}, where 
+	 * {@code "### - XXXXXX"}, where 
 	 * {@code ###} represents the number of schools (not branches)
 	 * and {@code XXXXXX} represents the name of the municipality.
 	 * If a school has more than one branch in a municipality
 	 * it must be counted only once.
 	 * 
+	 * @return a collection of strings with the counts
 	 */
 	public Collection<String> countSchoolsPerMunicipality(){
 		return null;
@@ -193,13 +204,14 @@ public class Region {
 	
 	/**
 	 * returns a list of strings with format
-	 * {@code ### - XXXXXX}, where 
+	 * {@code "### - XXXXXX"}, where 
 	 * {@code ###} represents the number of schools (not branches)
 	 * and {@code XXXXXX} represents the name of the community.
 	 * They are sorted by descending number of schools.
 	 * The list must contain only schools having at least
 	 * a branch in a municipality part of a community.
 	 * 
+	 * @return a collection of strings with the counts
 	 */
 	public List<String> countSchoolsPerCommunity(){
 		return null;

@@ -2,6 +2,11 @@ package schools;
 
 import java.util.Collection;
 
+/**
+ * Represents the schools.
+ * Each school has one or more {@link Branch branches}
+ *
+ */
 public class School {
 
 	public String getName() {
