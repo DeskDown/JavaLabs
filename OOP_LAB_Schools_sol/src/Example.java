@@ -31,11 +31,10 @@ public class Example {
 							s.getBranches().stream().collect(mapping(Branch::getAddress,joining(",")))
 				);
 				
-		String urlDatiPiemonte = "http://softeng.polito.it/courses/09CBI/schools.csv";
 
 		Region r = new Region("Piemonte");
 		
-		r.readData(urlDatiPiemonte);
+		r.readData("schools.csv");
 		
 		System.out.println("Loaded " + r.getSchools().size() + " schools");
 		
@@ -45,8 +44,8 @@ public class Example {
 		System.out.println("Count branches per municipality");
 		r.countBranchesPerMunicipality().forEach( (k,v) -> System.out.println(k + ":" + v));
 
-		System.out.println("Average branches per municipality, computed by province");
-		r.averageBranchesPerMunicipality().forEach( (k,v) -> System.out.println(k + ":" + v));
+		System.out.println("Count branches per municipality per province");
+		r.countBranchesPerMunicipalityPerProvince().forEach( (k,v) -> System.out.println(k + ":" + v));
 
 		System.out.println("Count schools per minicipality");
 		r.countSchoolsPerMunicipality().forEach( System.out::println);

@@ -13,11 +13,12 @@ import static org.junit.Assert.*;
 
 public class TestR4_Queries {
 
-	Region r ;
+	private Region r ;
+	
 	@Before
 	public void setUp() throws IOException{
 		r = new Region("Piemonte");		
-		r.readData  (TestR3_ReadData.url);
+		r.readData  (TestR3_ReadData.file);
 	}
 
 	/*
@@ -103,13 +104,39 @@ public class TestR4_Queries {
 	 * @return
 	 */
 	@Test
-	public void testAverageBranchesPerMunicipality(){
-		Map<String,Double> res = r.averageBranchesPerMunicipality();
+	public void testCcountBranchesPerMunicipalityPerProvince(){
+		Map<String,Map<String,Long>> res = r.countBranchesPerMunicipalityPerProvince();
 		assertNotNull("Missing count of branches per municipality",res);
-		assertEquals(7.2,res.get("TORINO"),0.1);
-		assertEquals(3.6,res.get("ASTI"),0.1);
-		assertEquals(3.9,res.get("ALESSANDRIA"),0.1);
+		Map<String,Long> resTo = res.get("TO");
+		assertNotNull("Missing counts for province of TO",resTo);
+		assertEquals("Incorrect number of municipalities in TO province",
+						268,resTo.size());
+
+		Map<String,Long> resAt = res.get("AT");
+		assertNotNull("Missing counts for province of AT",resAt);
+		assertEquals("Incorrect number of municipalities in AT province",
+				68,resAt.size());
+
+		Map<String,Long> resCN = res.get("CN");
+		assertNotNull("Missing counts for province of CN",resCN);
+		assertEquals("Incorrect number of municipalities in AT province",
+				179,resCN.size());
 	}
 
+	@Test
+	public void testCcountBranchesPerMunicipalityPerProvince2(){
+		Map<String,Map<String,Long>> res = r.countBranchesPerMunicipalityPerProvince();
+		assertNotNull("Missing count of branches per municipality",res);
+		Map<String,Long> resTo = res.get("TO");
+		assertEquals("Wrong number of schools for LUSERNA SAN GIOVANNI",
+						11L,resTo.get("LUSERNA SAN GIOVANNI").longValue());
+		Map<String,Long> resAt = res.get("AT");
+		assertEquals("Wrong number of schools for NIZZA MONFERRATO",
+				12L,resAt.get("NIZZA MONFERRATO").longValue());
+
+		Map<String,Long> resCN = res.get("CN");
+		assertEquals("Wrong number of schools for SAMPEYRE",
+				3L,resCN.get("SAMPEYRE").longValue());
+	}
 
 }

@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
 
 public class TestR3_ReadData {
 	
-	final static String url;
+    static String file;
 	static {
 		//System.out.println(TestR3_ReadData.class.getResource("."));
-		URL resource = TestR3_ReadData.class.getResource("RegionePiemonte.csv");
-		if(System.getProperty("os.name").toLowerCase().startsWith("window")){
+		URL resource = TestR3_ReadData.class.getResource("schools.csv");
+//		if(System.getProperty("os.name").toLowerCase().startsWith("window")){
 			File data=new File("data");
 			data.mkdirs();
 			data.deleteOnExit();
@@ -37,17 +37,18 @@ public class TestR3_ReadData {
 				while((n=in.read(b))!=-1){
 					out.write(b,0,n);
 				}
+				file = outFile.getCanonicalPath();
 			} catch (IOException e) {
+				file=null;
 				System.err.println(e);
 				outFile=null;
 			}
-			url = (outFile==null?null:outFile.toURI().toString());
-		}else{
-			url = resource.toString();
-		}
+//		}else{
+//			url = resource.toString();
+//		}
 	}
 	
-	Region r ;
+	private Region r ;
 
 	@Before
 	public void setUp() throws IOException{
@@ -57,24 +58,27 @@ public class TestR3_ReadData {
 	
 	@Test
 	public void testCommunity() throws IOException{
-		r.readData(url);
+		r.readData(file);
 		
 		Collection<Community> communities = r.getCommunities();
+		assertNotNull("No communities collection returned",communities);
+
 		
 		assertEquals("Wrong number of communities found",
 					76,communities.size());
 		Map<Community.Type,Long> counts = communities.stream().collect(Collectors.groupingBy(Community::getType,Collectors.counting()));
-		assertEquals("Wrong numner of hill communities",28,counts.get(Community.Type.COLLINARE).longValue());
-		assertEquals("Wrong numner of mountain communities",48,counts.get(Community.Type.MONTANA).longValue());
+		assertEquals("Wrong number of hill communities",28,counts.get(Community.Type.COLLINARE).longValue());
+		assertEquals("Wrong number of mountain communities",48,counts.get(Community.Type.MONTANA).longValue());
 	}
 
 	@Test
 	public void testMuniciaplities() throws IOException{
-		r.readData(url);
+		r.readData(file);
 		
 		Collection<Municipality> municipalities = r.getMunicipalies();
+		assertNotNull("No communities municipalities returned",municipalities);
 		
-		assertEquals("Wrong numeber of municipalities",
+		assertEquals("Wrong number of municipalities",
 					886,municipalities.size());
 		long numProvinces = municipalities.stream().map(Municipality::getProvince).distinct().count();
 		assertEquals("Wrong number of provinces",8,numProvinces);
@@ -82,9 +86,10 @@ public class TestR3_ReadData {
 
 	@Test
 	public void testSchools() throws IOException{
-		r.readData(url);
+		r.readData(file);
 		
 		Collection<School> schools = r.getSchools();
+		assertNotNull("No communities schools returned",schools);
 		
 		assertEquals("Wrong number of schools",
 					4057,schools.size());

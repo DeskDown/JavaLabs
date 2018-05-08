@@ -1,5 +1,10 @@
 package schools;
 
+/**
+ * Represents a branch of a {@link School}.
+ * For each school there exist one or more branches.
+ *
+ */
 public class Branch {
 	private int codice;
 	private String tipoUnita;
@@ -10,45 +15,53 @@ public class Branch {
 	private String fax;
 	private Municipality comune;
 	private School scuola;
-	public Branch(int codice, String indirizzo, int cap,
+	
+	Branch(int codice, String indirizzo, int cap,
 				  Municipality comune, School scuola) {
 		super();
 		this.codice = codice;
-		this.tipoUnita = tipoUnita;
 		this.indirizzo = indirizzo;
 		CAP = cap;
-		this.frazione = frazione;
-		this.telefono = telefono;
-		this.fax = fax;
 		this.comune = comune;
 		this.scuola = scuola;
 	}
+	
+	/**
+	 * Getter method for the code
+	 * @return code of the branch
+	 */
 	public int getCode() {
 		return codice;
 	}
-	public String getBranchType() {
-		return tipoUnita;
-	}
+
+	/**
+	 * Getter method for the address
+	 * @return address of the branch
+	 */
 	public String getAddress() {
 		return indirizzo;
 	}
+	
+	/**
+	 * Getter method for the CAP (zip code)
+	 * @return zip code of the branch
+	 */
 	public int getCAP() {
 		return CAP;
 	}
-	public String getLocality() {
-		return frazione;
-	}
-	public String getTelephone() {
-		return telefono;
-	}
-	public String getFax() {
-		return fax;
-	}
 
+	/**
+	 * Retrieve the municipality where the branch is located
+	 * @return municipality of the branch
+	 */
 	public Municipality getMunicipality(){
 		return comune;
 	}
 
+	/**
+	 * Retrieve the school this branch belongs to.
+	 * @return school the branch belongs to
+	 */
 	public School getSchool(){
 		return scuola;
 	}

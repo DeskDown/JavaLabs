@@ -1,6 +1,7 @@
 package schools;
 
-import it.polito.utility.LineUtils;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
@@ -14,12 +15,24 @@ import static java.util.stream.Collectors.*;
 import static java.util.Comparator.*;
 
 
+/**
+ * Represents the region and serves as a facade class
+ * for the package.
+ * 
+ * It provides factory methods for creating instances of
+ * {@link Community}, {@link Municipality}, {@link School}, and {@link Branch}
+ *
+ */
 public class Region {
 	private String nome;
 	private Collection<School> scuole;
 	private Collection<Community> comunita;
 	private Collection<Municipality> comuni;
 	
+	/**
+	 * Creates a new region with the given name.
+	 * @param name the name of the region
+	 */
 	public Region(String nome){
 		this.nome = nome;
 		scuole=new LinkedList<>();
@@ -27,16 +40,32 @@ public class Region {
 		comuni=new LinkedList<>();
 	}
 	
+	/**
+	 * Getter method
+	 * @return the name of the region
+	 */
 	public String getName(){return nome;}
 	
+	/**
+	 * Retrieves all schools in the region
+	 * @return collection of schools
+	 */
 	public Collection<School> getSchools() {
 		return scuole;
 	}
 	
+	/**
+	 * Retrieves all the communities
+	 * @return the collection of all communities
+	 */
 	public Collection<Community> getCommunities() {
 		return comunita;
 	}
 	
+	/**
+	 * Retrieves all municipalities in the region
+	 * @return the collection of municipalities
+	 */
 	public Collection<Municipality> getMunicipalies() {
 		return comuni;
 	}
@@ -44,15 +73,40 @@ public class Region {
 	
 	// factory methods
 	
+	/**
+	 * Factory method that build a new community of the given type.
+	 * The type is {@link Community.Type}
+	 * 
+	 * @param name name of the community
+	 * @param type type of the community
+	 * @return the new created community
+	 */
 	public Community newCommunity(String name, Community.Type type){
 		Community c = new Community(name, type);
 		comunita.add(c);
 		return c;
 	}
 
+	/**
+	 * Factory method that build a new municipality.
+	 * 
+	 * @param nome 		name of the municipality
+	 * @param province 	province of the municipality
+	 * @return the new created municipality
+	 */
 	public Municipality newMunicipality(String nome, String provincia){
 		return newMunicipality( nome,  provincia,  null);
 	}
+	
+	/**
+	 * Factory methods, that build a new municipality that
+	 * is part of a community.
+	 * 
+	 * @param nome 		name of the municipality
+	 * @param province 	province of the municipality
+	 * @param comunita  community the municipality belongs to 
+	 * @return the new created municipality
+	 */
 	public Municipality newMunicipality(String nome, String provincia, Community comunita){
 		Municipality c = new Municipality(nome, provincia, comunita);
 		comuni.add(c);
@@ -63,6 +117,16 @@ public class Region {
 		return c;
 	}
 	
+	/**
+	 * Factory method that creates a new school
+	 * 
+	 * @param name    name of the school
+	 * @param code    code of the school
+	 * @param grade	  grade of the school (1 to 4)
+	 * @param description  description of the school
+	 * 
+	 * @return a new school object
+	 */
 	public School newSchool(String name, String code, int grade,
 			String description){
 		School s = new School(name, code, grade, description);
@@ -71,32 +135,51 @@ public class Region {
 		return s;
 	}
 	
+	/**
+	 * Factory method that creates a new school branch
+	 * 
+	 * @param regionalCode	regional code of the branch
+	 * @param municipality	municipality where the branch is located
+	 * @param address		address of the branch
+	 * @param zipCode		zip code of the branch
+	 * @param school		school the branch is part of
+	 * @return	the new created branch
+	 */
 	public Branch newBranch(int regionalCode, Municipality municipality, String indirizzo, int cap,
 							School school)	{
 		Branch s = new Branch(regionalCode, indirizzo, cap, municipality, school);
-		school.addSede(s);
-		municipality.addSede(s);
+		school.addBranch(s);
+		municipality.addBranch(s);
 		
 		return s;
 	}
 	
-	public void readData(String url) throws IOException {
-		// Hint: use LineUtils.loadLinesUrl(url) to load the CSV lines from a URL
-
-		/**
-			Provincia,
-			Comune,
-			Grado Scolastico,
-			Descrizione Scuola,
-			Cod Sede,
-			Cod Scuola,
-			Denominazione Scuola,
-			Indirizzo e n. civico,
-			C.A.P.,
-			Comunita Collinare,
-			Comunita Montana
-		**/
-		List<String> lines = LineUtils.loadLinesUrl(url);
+	/**
+	 * Load data from a file.
+	 * 
+	 * The file must be a CSV file and it is supposed to contain the following fields:
+	 * <ul>
+	 *  <li>{@code "Provincia"},   (province)
+	 *  <li>{@code "Comune"},		(municipality)
+	 *  <li>{@code "Grado Scolastico"}, (school grade)
+	 *  <li>{@code "Descrizione Scuola"}, (school description)
+	 *  <li>{@code "Cod Sede"}, (branch code)
+	 *  <li>{@code "Cod Scuola"}, (school code)
+	 *  <li>{@code "Denominazione Scuola"}, (name of the school)
+	 *  <li>{@code "Indirizzo e n. civico"}, (address of the branch)
+	 *  <li>{@code "C.A.P."}, (zip code of the branch)
+	 *  <li>{@code "Comunita Collinare"}, (Hill community)
+	 *  <li>{@code "Comunita Montana"},  (Mountain community)
+	 * </ul>
+	 * 
+	 * @param file the path of the file
+	 */
+	public void readData(String file) {
+		List<String> lines = null;
+		try(BufferedReader in = new BufferedReader(new FileReader(file))){
+			lines = in.lines().collect(toList());
+		}catch(IOException e) { System.err.println(e.getMessage()); }
+				
 		
 		if(lines==null) return; 
 		
@@ -157,10 +240,8 @@ public class Region {
 	}
 	
 	/**
-	 * restituisce una mappa 
-	 * contenente come chiave la descrizione e come valore il numero
-	 * di scuole corrispondentin a tale descrizione. 
-	 * 
+	 * Counts how many schools there exist for each description
+	 * @return a map of school count vs. description
 	 */
 	public Map<String,Long>countSchoolsPerDescription(){
 		return scuole.stream()
@@ -170,11 +251,8 @@ public class Region {
 
 	
 	/**
-	 * restituisce una mappa contenente come chiave il 
-	 * nome del comune e come valore il numero di sedi 
-	 * presenti nel comune.
-	 *  
-	 * @return
+	 * Count how many school branches there exist for each municipality
+	 * @return a map of branch count vs. municipality
 	 */
 	public Map<String,Long>countBranchesPerMunicipality(){
 		return scuole.stream()
@@ -186,33 +264,32 @@ public class Region {
 
 	
 	/**
-	 * restituisce una mappa contenente come chiave il nome della 
-	 * provincia e come valore la media del numero di sedi per comune.
-	 * @return
+	 * Counts the number of school branches per municipality
+	 * and groups them by province.
+	 * @return a map of maps the inner reports count of branches vs. municipality
+	 * 			the outer reports provinces as keys
 	 */
-	public Map<String,Double>averageBranchesPerMunicipality(){
+	public Map<String,Map<String,Long>>countBranchesPerMunicipalityPerProvince(){
 		return scuole.stream()
-				.map(School::getBranches)
-				.flatMap(Collection::stream)
-				.collect(groupingBy( s->s.getMunicipality().getProvince(), 
-						collectingAndThen(groupingBy( s->s.getMunicipality().getName(),counting()),
-										   g -> g.values().stream()
-										   		.collect(averagingLong(Long::longValue))
-										   )
-						))
-				
-				;
+		.map(School::getBranches)
+		.flatMap(Collection::stream)
+		.collect(groupingBy( s->s.getMunicipality().getProvince(), 
+							groupingBy( s->s.getMunicipality().getName(),counting())
+				))
+		
+		;
 	}
 
 	
 	/**
-	 * restituisce una lista
-	 * di stringhe ciascuna nel formato "<i>### - XXXXXX</i>" dove 
-	 * <i>###</i> rappresenta il numero di scuole (!non sedi!)
-	 * e <i>XXXXXX</i> rappresenta il nome del comune.
-	 * Se una scuola ha pi&ugrave; sedi nello stesso comune deve
-	 * essere contata una sola volta.
+	 * returns a list of strings with format
+	 * {@code "### - XXXXXX"}, where 
+	 * {@code ###} represents the number of schools (not branches)
+	 * and {@code XXXXXX} represents the name of the municipality.
+	 * If a school has more than one branch in a municipality
+	 * it must be counted only once.
 	 * 
+	 * @return a collection of strings with the counts
 	 */
 	public Collection<String> countSchoolsPerMunicipality(){
 		
@@ -239,14 +316,15 @@ public class Region {
 	}
 	
 	/**
-	 * restituisce una lista
-	 * di stringhe ciascune nel formato "<i>### - XXXXXX</i>" dove
-	 * <i>###</i> rappresenta il numero di scuole (!non sedi!)
-	 * e <i>XXXXXX</i> rappresenta il nome della comunita.
-	 * ordinate in maniera decrescente per numero di scuole.
-	 * L'elenco deve contenere solo le scuole che hanno almeno
-	 * una sede in un comune sede di comunita montana.
+	 * returns a list of strings with format
+	 * {@code "### - XXXXXX"}, where 
+	 * {@code ###} represents the number of schools (not branches)
+	 * and {@code XXXXXX} represents the name of the community.
+	 * They are sorted by descending number of schools.
+	 * The list must contain only schools having at least
+	 * a branch in a municipality part of a community.
 	 * 
+	 * @return a collection of strings with the counts
 	 */
 	public List<String> countSchoolsPerCommunity(){
 		return scuole.stream()

@@ -7,15 +7,13 @@ import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class TestR1_Municipality  {
-    private static final String MOUNTAINT_COMMUNITY = "ALTA VALLE SUSA";  // mountain community
-	private static final String HILL_COMMUNITY = "ALTO MONFERRATO";
-	Region r ;
+    static final String MOUNTAINT_COMMUNITY = "ALTA VALLE SUSA";  // mountain community
+	static final String HILL_COMMUNITY = "ALTO MONFERRATO"; // hill community
+	private Region r ;
 	
 	@Before
 	public void setUp(){
-		
 		r = new Region("Piemonte");
-		
 	}
 	
 	@Test
@@ -23,8 +21,8 @@ public class TestR1_Municipality  {
 		Community cm = r.newCommunity(MOUNTAINT_COMMUNITY, Community.Type.MONTANA);
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);
 	
-		assertNotNull(cm);
-		assertNotNull(cc);
+		assertNotNull("No community returned by newCommunity()",cm);
+		assertNotNull("No community returned by newCommunity()",cc);
 		
 		assertEquals("Wrong name for mountain community",
 					MOUNTAINT_COMMUNITY,cm.getName());
@@ -42,6 +40,7 @@ public class TestR1_Municipality  {
 		Community cc = r.newCommunity(HILL_COMMUNITY, Community.Type.COLLINARE);
 
 		Collection<Community> lc = r.getCommunities();
+		assertNotNull("No cummunity collection returned",lc);
 		
 		assertEquals("Wrong number of communities,",
 					2,lc.size());
@@ -102,7 +101,8 @@ public class TestR1_Municipality  {
 		Municipality m2 = r.newMunicipality("Nizza Monferrato","ASTI",cc);
 
 		Collection<Municipality> lc = r.getMunicipalies();
-		
+		assertNotNull("No municipality collection returned",lc);
+
 		assertEquals("Wrong number of municipalities found",
 					3,lc.size());
 		assertTrue("Missing municipality " + m0.getName(),lc.contains(m0));

@@ -66,6 +66,7 @@ public class TestR2_Schools {
 		School s2 = r.newSchool("School Media Mangiafuoco", "SM1A76", 2, "School Primaria");
 
 		Collection<School> ls = r.getSchools();
+		assertNotNull("No school collection returned",ls);
 
 		assertEquals("Wrong number of schools returned",
 					2, ls.size());
@@ -81,11 +82,12 @@ public class TestR2_Schools {
 		Branch b2 = r.newBranch(12367, m1, "Via Manzoni 5", 10199, s2);
 		Branch b3 = r.newBranch(12398, m2, "Via Roma 9", 14099, s2);
 
-		Collection<Branch> ls = s2.getBranches();
+		Collection<Branch> lb = s2.getBranches();
+		assertNotNull("No branch collection returned",lb);
 
-		assertEquals("Wrong numner of branches returned",2, ls.size());
-		assertTrue("Missing branch",ls.contains(b2));
-		assertTrue("Missing branch",ls.contains(b3));
+		assertEquals("Wrong numner of branches returned",2, lb.size());
+		assertTrue("Missing branch",lb.contains(b2));
+		assertTrue("Missing branch",lb.contains(b3));
 
 		assertTrue("Branch not found among the relative school's brances",
 					s1.getBranches().contains(b1));
