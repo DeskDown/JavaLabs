@@ -68,6 +68,9 @@ the school grade, and the description.
 The method returns an object of class <b>School</b>, which provides
 the required getter methods.
 </p>
+<p>
+Schools are aggregations of branches (at least a branch for each school).
+
 
 <p>
 Schools can have one or more branches defines by means of
@@ -127,6 +130,10 @@ th {
 <p>
 The file contains a row for each branch, therefore the information about schools, communities, and municipalities
 are repeated more than once.
+<p>
+A school corresponds to a distinct school code (<i>"Cod scuola"</i>) that appears
+for at leat one branch.
+The branches for a school are all those shareing the same school code.
 <p>
 The columns <i>Comunita Collinare</i> (hill community) and <i>Comunita Montana</i> (mount community) 
 can contain the name of the community or be empty when the municipality does not belong to any community.

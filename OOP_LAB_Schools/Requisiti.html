@@ -52,7 +52,7 @@ dei comuni che vi appartengono tramite il metodo <b>getMunicipalities()</b>.
     </li>
 <li>La classe <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html"><i>Optional</i></a>
     viene utilizzata per segnalare esplicitamente che un valore pu&ograve; essere <i>null</i>. 
-    Il metodo <i>isPresent()</i> indica se &egrave; presente un valore nell'optional).<p>
+    Il metodo <i>isPresent()</i> indica se &egrave; presente un valore nell'optional.<p>
     
     Per creare un <i>Optional</i> a partire da una variable che potrebbe essere <i>null</i> 
 	si pu&ograve; usare <i>Optional.ofNullable()</i> che  restituisce un <i>Optional</i> contenente 
@@ -67,6 +67,8 @@ che accetta come parametri la denominazione, il codice ministeriale (univoco),
 il grado e la descrizione.
 
 Il metodo restistuisce un oggetto di classe <b>School</b>
+<p>
+Le scuole sono raggruppamenti di sedi (almeno una sede per ogni scuola).
 <p>
 Le scuole possono avere diverse sedi che vengono definite tramite
 il metodo <b>newBranch()</b> che riceve come parametri il codice (univoco), 
@@ -127,6 +129,9 @@ th {
 Il file contiene una riga per ogni sede, quindi le informazioni relative a scuola, comunit&agrave; 
 e comune possono essere replicate pi&ugrave; volte.
 <p>
+Ogni scuola corrisponde ad un codice scuola distinto che compare in almeno una sede.
+Le sedi di una scuola sono tutte quelle che hanno lo stesso codice scuola.
+<p>
 Le colonne <i>Comunita Collinare</i> e <i>Comunita Montana</i> possono assumere come valore
 il nome della comunit&agrave; oppure essere assenti se il comune non appartiene ad alcuna comunit&agrave;.
 <!--
@@ -158,7 +163,7 @@ contengono i dati veri e propri.
 <p>
 Il metodo <b>countSchoolsPerDescription()</b> restituisce una mappa
 contenente come chiave la descrizione e come valore il numero
-di scuole corrispondentin a tale descrizione. 
+di scuole corrispondenti a tale descrizione. 
 <p>
 Il metodo <b>countBranchesPerMunicipality()</b> restituisce una mappa
 contenente come chiave il nome del comune e come valore il numero
@@ -174,9 +179,9 @@ di stringhe ciascuna nel formato "<i>### - XXXXXX</i>" dove
 e <i>XXXXXX</i> rappresenta il nome del comune.
 <p>
 Il metodo <b>countSchoolsPerCommunity()</b> restituisce una lista
-di stringhe ciascune nel formato "<i>### - XXXXXX</i>" dove
+di stringhe ciascuna nel formato "<i>### - XXXXXX</i>" dove
 <i>###</i> rappresenta il numero di scuole (!non sedi!)
-e <i>XXXXXX</i> rappresenta il nome della comunita
+e <i>XXXXXX</i> rappresenta il nome della comunit&grave;
 ordinate in maniera decrescente per numero di scuole.
 L'elenco deve contenere solo le scuole che hanno almeno
 una sede in un comune sede di comunit&agrave;.
@@ -194,7 +199,7 @@ una corretta inferenza dei tipi.</li>
 
 <footer id="note">
 <sup>(*)</sup>: il file contiene una versione semplificata dei dati
-disponibili sul portale open data dalle regione, in particolare
+disponibili sul portale open data dalla regione, in particolare
 <a href="http://www.dati.piemonte.it/catalogodati/scarica.html?idallegato=252"
 style="display:inline-block;"
 >http://www.dati.piemonte.it/catalogodati/scarica.html?idallegato=252</a>

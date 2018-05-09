@@ -4,7 +4,8 @@ import java.util.Collection;
 
 /**
  * Represents the schools.
- * Each school has one or more {@link Branch branches}
+ * Schools are aggregations of branches, 
+ * each school has one or more {@link Branch branches} (at least one)
  *
  */
 public class School {
