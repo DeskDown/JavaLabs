@@ -132,8 +132,8 @@ The file contains a row for each branch, therefore the information about schools
 are repeated more than once.
 <p>
 A school corresponds to a distinct school code (<i>"Cod scuola"</i>) that appears
-for at leat one branch.
-The branches for a school are all those shareing the same school code.
+for at least one branch.
+The branches for a school are all those sharing the same school code.
 <p>
 The columns <i>Comunita Collinare</i> (hill community) and <i>Comunita Montana</i> (mount community) 
 can contain the name of the community or be empty when the municipality does not belong to any community.
@@ -143,7 +143,7 @@ The column <i>Grado Scolastico</i> (school grade) contains both a number and a d
 to create a <i>School</i> object, only the number before the <i>'-'</i> character is required.
 -->
 <p>
-The data relative to the Piedmont regional schools is availabl in file <i>schools.csv</i> <sup>(<a href="#note"> * </a>)</sup>.
+The data relative to the Piedmont regional schools is available in file <i>schools.csv</i> <sup>(<a href="#note"> * </a>)</sup>.
  
 <p>
 <h4>Hints:</h4>
@@ -158,19 +158,17 @@ method <i>readData()</i> that reads the rows of the file and adds them to a list
 The first row contains the headers, while the following ones
 contain the real data.
 
-<li>For reading the lines from a file the method <i>loadLinesUrl()</i>
-from class <i>it.polito.utility.LineUtils</i> that is already provided inside
-the project.
-<br>
-For instance to count the number of rows and columns in
-a file, the following code can be used:
-<pre>
-	String url = "http://oop.polito.it/svn/OOPLabs/master/Data/schools.csv";
-	java.util.List<String> lines = it.polito.utility.LineUtils.loadLinesUrl(url);
-	int nrows = lines.size();
-	int ncols = lines.get(0).split(",").length;
-	System.out.println("Loaded " + nrows + " lines of " + ncols + " columns");
- </pre>
+<li>Per la lettura da file, si parta dal frammento di codice gi&agrave; presente
+nel metodo <i>readData()</i> che legge
+le righe di un file e le inserisce in una lista.
+La prima riga del file contiene le intestazioni, mentre quelle successive
+contengono i dati veri e propri.
+
+<li>For reading the lines from a file start from the code fragment
+already present in method <i>readData()</i> that reads
+the rows from a file and adds them to a list.
+The first row of the files contains the headings, while the
+successive ones contain the actual data.
 </ul>
 
 
@@ -188,16 +186,12 @@ The method <b>countBranchesPerMunicipalityPerProvince()</b> returns a map
 have as key the  province and as value another map that links a municipality 
 (of the province) to the relative number of school branches.
 <p>
-The method <b>averageBranchesPerMunicipality()</b> returns a map containing as key the name of the province
-and as value the average number of branches in the municipalities of that province.
-<p>
 The method <b>countSchoolsPerMunicipality()</b> returns a list of strings, each with the format 
 "<i>### - XXXXXX</i>" where
 <i>###</i> represents the number of schools and <i>XXXXXX</i> represents the name of the municipality.
 <p>
 The method <b>countSchoolsPerCommunity()</b> returns a list of strings, each with the format 
-"<i>### - XXXXXX</i>" where
-<i>###</i> represents the number of schools and <i>XXXXXX</i> represents the name of the community.
+"<i>### - XXXXXX</i>" where <i>###</i> represents the number of schools and <i>XXXXXX</i> represents the name of the community.
 sorted in decreasing ordered by number of schools.
 Only the schools having at least a branch in a municipality that belongs to a community.
 
