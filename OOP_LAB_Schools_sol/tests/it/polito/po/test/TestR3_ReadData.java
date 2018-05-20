@@ -24,12 +24,15 @@ public class TestR3_ReadData {
 		//System.out.println(TestR3_ReadData.class.getResource("."));
 		URL resource = TestR3_ReadData.class.getResource("schools.csv");
 //		if(System.getProperty("os.name").toLowerCase().startsWith("window")){
-			File data=new File("data");
-			data.mkdirs();
-			data.deleteOnExit();
-			File outFile = new File(data,"Dati.csv");
+		File outFile;
+		try {
+			outFile=File.createTempFile("school", ".csv");
+//			File data=new File("data");
+//			data.mkdirs();
+//			data.deleteOnExit();
+//			File outFile = new File(data,"Dati.csv");
 			outFile.deleteOnExit();
-			System.out.println("Extracting data file...");
+			System.out.println("Extracting data file... " + outFile.getAbsolutePath());
 			try(InputStream in = resource.openStream();
 				FileOutputStream out=new FileOutputStream(outFile)){
 				byte[]b = new byte[2048];
@@ -38,11 +41,12 @@ public class TestR3_ReadData {
 					out.write(b,0,n);
 				}
 				file = outFile.getCanonicalPath();
-			} catch (IOException e) {
+			} 
+		}catch (IOException e) {
 				file=null;
 				System.err.println(e);
 				outFile=null;
-			}
+		}
 //		}else{
 //			url = resource.toString();
 //		}
