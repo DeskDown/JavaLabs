@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import static java.util.stream.Collectors.*;
 import static java.util.Comparator.*;
@@ -25,9 +24,10 @@ import static java.util.Comparator.*;
  */
 public class Region {
 	private String nome;
-	private Collection<School> scuole;
-	private Collection<Community> comunita;
-	private Collection<Municipality> comuni;
+	private Collection<School> schools;
+	private Collection<Community> communities;
+	private Collection<Municipality> municipalities;
+	// an alternative solution could store them in Maps 
 	
 	/**
 	 * Creates a new region with the given name.
@@ -35,9 +35,9 @@ public class Region {
 	 */
 	public Region(String nome){
 		this.nome = nome;
-		scuole=new LinkedList<>();
-		comunita=new LinkedList<>();
-		comuni=new LinkedList<>();
+		schools=new LinkedList<>();
+		communities=new LinkedList<>();
+		municipalities=new LinkedList<>();
 	}
 	
 	/**
@@ -51,7 +51,7 @@ public class Region {
 	 * @return collection of schools
 	 */
 	public Collection<School> getSchools() {
-		return scuole;
+		return schools;
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class Region {
 	 * @return the collection of all communities
 	 */
 	public Collection<Community> getCommunities() {
-		return comunita;
+		return communities;
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Region {
 	 * @return the collection of municipalities
 	 */
 	public Collection<Municipality> getMunicipalies() {
-		return comuni;
+		return municipalities;
 	}
 	
 	
@@ -83,7 +83,7 @@ public class Region {
 	 */
 	public Community newCommunity(String name, Community.Type type){
 		Community c = new Community(name, type);
-		comunita.add(c);
+		communities.add(c);
 		return c;
 	}
 
@@ -102,16 +102,16 @@ public class Region {
 	 * Factory methods, that build a new municipality that
 	 * is part of a community.
 	 * 
-	 * @param nome 		name of the municipality
+	 * @param name 		name of the municipality
 	 * @param province 	province of the municipality
-	 * @param comunita  community the municipality belongs to 
+	 * @param community  community the municipality belongs to 
 	 * @return the new created municipality
 	 */
-	public Municipality newMunicipality(String nome, String provincia, Community comunita){
-		Municipality c = new Municipality(nome, provincia, comunita);
-		comuni.add(c);
-		if(comunita!=null){
-			comunita.add(c);
+	public Municipality newMunicipality(String name, String province, Community community){
+		Municipality c = new Municipality(name, province, community);
+		municipalities.add(c);
+		if(community!=null){
+			community.add(c);
 		}
 		
 		return c;
@@ -130,7 +130,7 @@ public class Region {
 	public School newSchool(String name, String code, int grade,
 			String description){
 		School s = new School(name, code, grade, description);
-		scuole.add(s);
+		schools.add(s);
 		
 		return s;
 	}
@@ -192,21 +192,21 @@ public class Region {
 		lines
 		.forEach( r -> {
 			String[] row = r.split(",");
-			Community comunita = getComunita(h2i,row);
-			Municipality comune = comuni.stream()
+			Community community = getCommunity(h2i,row);
+			Municipality comune = municipalities.stream()
 					 .filter( c -> row[h2i.get("Comune")].equals(c.getName()))
 					 .findFirst()
 					 .orElseGet(() -> newMunicipality(row[h2i.get("Comune")],
 							 						 row[h2i.get("Provincia")],
-							 						 comunita
+							 						 community
 							 ))
 					 ;
-			School scuola = scuole.stream()
+			School scuola = schools.stream()
 							.filter( s -> s.getCode().equals(row[h2i.get("Cod Scuola")] ))
 							.findFirst()
 							.orElseGet( () -> newSchool(row[h2i.get("Denominazione Scuola")],
 							                            row[h2i.get("Cod Scuola")],
-							                            Integer.parseInt(row[h2i.get("Grado Scolastico")].replaceAll(" *-.*$","")),
+							                            Integer.parseInt(row[h2i.get("Grado Scolastico")]),
 											  		    row[h2i.get("Descrizione Scuola")]
 									))
 							;
@@ -219,19 +219,28 @@ public class Region {
 		});
 	}
 
-	private Community getComunita(Map<String,Integer> h2i,String[] row){
+	private Community getCommunity(Map<String,Integer> h2i,String[] row){
 		int cci = h2i.get("Comunita Collinare");
 		String collinare = (cci>=row.length?"":row[cci]);
 		int cmi = h2i.get("Comunita Montana");
 		String montana = (cmi>=row.length?"":row[cmi]);
 		if(collinare.length()!=0){
-			return comunita.stream()
+			return communities.stream()
 					.filter( c -> c.getName().equals(collinare))
 					.findFirst()
 					.orElseGet(() -> newCommunity(collinare, Community.Type.COLLINARE) );
+			// OR
+//			Optional<Community> cc = communities.stream()
+//									.filter( c -> c.getName().equals(collinare))
+//									.findFirst();
+//			if(cc.isPresent()) {
+//				return cc.get();
+//			}else {
+//				return newCommunity(collinare, Community.Type.COLLINARE) ;
+//			}
 		}else
 		if(montana.length()!=0){
-				return comunita.stream()
+				return communities.stream()
 						.filter( c -> c.getName().equals(montana))
 						.findFirst()
 						.orElseGet(() -> newCommunity(montana, Community.Type.MONTANA) );
@@ -244,9 +253,25 @@ public class Region {
 	 * @return a map of school count vs. description
 	 */
 	public Map<String,Long>countSchoolsPerDescription(){
-		return scuole.stream()
+		return schools.stream()
 				.collect(groupingBy( s -> s.getDescription(),counting()))
 				;
+
+		// OR
+		
+//		Map<String,Long> result = new HashMap<>();
+//		for(School s : schools) {
+//			String descr = s.getDescription();
+//			if(result.containsKey(descr)) {
+//				result.put(descr, result.get(descr) + 1);
+//			}else {
+//				//result.put(descr, 1 ); // error: not auto-boxing from int to Long
+//				result.put(descr, 1L );
+////				result.put(descr, (long)1 );
+////				result.put(descr, new Long(1) );
+//			}
+//		}
+//		return result;
 	}
 
 	
@@ -255,9 +280,11 @@ public class Region {
 	 * @return a map of branch count vs. municipality
 	 */
 	public Map<String,Long>countBranchesPerMunicipality(){
-		return scuole.stream()
-				.map(School::getBranches)
-				.flatMap(Collection::stream)
+		return schools.stream()
+//				.map(School::getBranches)
+//				.flatMap(Collection::stream)
+				// OR
+				.flatMap(s -> s.getBranches().stream())
 				.collect(groupingBy( s->s.getMunicipality().getName(),counting()))
 				;
 	}
@@ -270,7 +297,7 @@ public class Region {
 	 * 			the outer reports provinces as keys
 	 */
 	public Map<String,Map<String,Long>>countBranchesPerMunicipalityPerProvince(){
-		return scuole.stream()
+		return schools.stream()
 		.map(School::getBranches)
 		.flatMap(Collection::stream)
 		.collect(groupingBy( s->s.getMunicipality().getProvince(), 
@@ -293,26 +320,39 @@ public class Region {
 	 */
 	public Collection<String> countSchoolsPerMunicipality(){
 		
-//		return scuole.stream()
-//				.map(Scuola::getSedi)
-//				.flatMap(Collection::stream)
-//				.collect(groupingBy( s->s.getComune().getNome(),
-//									 mapping(Sede::getScuola,collectingAndThen(toSet(), Set::size))
-//									)
-//						)
-//				.entrySet().stream()
-//				.map( e -> e.getValue()+ " - "+e.getKey())
-//				.collect(toList())
-//				;
-		return comuni.stream()
-				.collect(TreeMap::new,
-						 (a,c) -> a.put(c.getName(),c.getBranches().stream().map(Branch::getSchool).collect(toSet()).size()),
-						 (a1,a2) -> a1.putAll(a2)
+		return schools.stream()
+				.map(School::getBranches)
+				.flatMap(Collection::stream)
+				.collect(groupingBy( s -> s.getMunicipality().getName(),
+									 mapping(Branch::getSchool,collectingAndThen(toSet(), Set::size))
+									)
 						)
 				.entrySet().stream()
 				.map( e -> e.getValue()+ " - "+e.getKey())
 				.collect(toList())
 				;
+		// OR
+//		return schools.stream()
+//				.map(School::getBranches)
+//				.flatMap(Collection::stream)
+//				.collect(groupingBy( s -> s.getMunicipality().getName(),
+//									 mapping(Branch::getSchool,toSet())
+//									)
+//						)
+//				.entrySet().stream()
+//				.map( e -> e.getValue().size()+ " - "+e.getKey())
+//				.collect(toList())
+//				;
+		// OR
+//		return municipalties.stream()
+//				.collect(TreeMap::new,
+//						 (a,c) -> a.put(c.getName(),c.getBranches().stream().map(Branch::getSchool).collect(toSet()).size()),
+//						 (a1,a2) -> a1.putAll(a2)
+//						)
+//				.entrySet().stream()
+//				.map( e -> e.getValue()+ " - "+e.getKey())
+//				.collect(toList())
+//				;
 	}
 	
 	/**
@@ -327,7 +367,7 @@ public class Region {
 	 * @return a collection of strings with the counts
 	 */
 	public List<String> countSchoolsPerCommunity(){
-		return scuole.stream()
+		return schools.stream()
 				.map(School::getBranches)
 				.flatMap(Collection::stream)
 				.filter( s->s.getMunicipality().getCommunity().isPresent() )

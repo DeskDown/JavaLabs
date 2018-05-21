@@ -22,7 +22,7 @@ public class TestR3_ReadData {
     static String file;
 	static {
 		//System.out.println(TestR3_ReadData.class.getResource("."));
-		URL resource = TestR3_ReadData.class.getResource("schools.csv");
+		URL resource = TestR3_ReadData.class.getResource("testSchools.csv");
 //		if(System.getProperty("os.name").toLowerCase().startsWith("window")){
 		File outFile;
 		try {

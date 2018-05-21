@@ -7,12 +7,8 @@ package schools;
  */
 public class Branch {
 	private int codice;
-	private String tipoUnita;
 	private String indirizzo;
 	private int CAP;
-	private String frazione;
-	private String telefono;
-	private String fax;
 	private Municipality comune;
 	private School scuola;
 	
