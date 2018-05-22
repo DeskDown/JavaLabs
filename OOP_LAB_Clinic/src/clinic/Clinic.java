@@ -1,6 +1,9 @@
 package clinic;
 
+import static java.util.stream.Collectors.toList;
+
 import java.io.IOException;
+import java.io.Reader;
 import java.util.Collection;
 
 /**
@@ -22,6 +25,19 @@ public class Clinic {
 
 	}
 
+
+	/**
+	 * Retrieves a patient information
+	 * 
+	 * @param ssn SSN of the patient
+	 * @return the object representing the patient
+	 * @throws NoSuchPatient in case of no patient with matching SSN
+	 */
+	public String getPatient(String ssn) throws NoSuchPatient {
+		// TODO Complete method
+		return null;
+	}
+
 	/**
 	 * Add a new doctor working at the clinic
 	 * 
@@ -37,25 +53,13 @@ public class Clinic {
 	}
 
 	/**
-	 * Retrieves a patient information
-	 * 
-	 * @param ssn SSN of the patient
-	 * @return the object representing the patient
-	 * @throws NoSuchPatient in case of not patient with matching SSN
-	 */
-	public Person getPatient(String ssn) throws NoSuchPatient {
-		// TODO Complete method
-		return null;
-	}
-
-	/**
 	 * Retrieves information about a doctor
 	 * 
 	 * @param docID ID of the doctor
 	 * @return object with information about the doctor
 	 * @throws NoSuchDoctor in case no doctor exists with a matching ID
 	 */
-	public Doctor getDoctor(int docID) throws NoSuchDoctor {
+	public String getDoctor(int docID) throws NoSuchDoctor {
 		// TODO Complete method
 		return null;
 	}
@@ -72,13 +76,66 @@ public class Clinic {
 		// TODO Complete method
 
 	}
+	
+	/**
+	 * Retrieves the id of the doctor assigned to a given patient.
+	 * 
+	 * @param ssn SSN of the patient
+	 * @return id of the doctor
+	 * @throws NoSuchPatient in case of not patient with matching SSN
+	 * @throws NoSuchDoctor in case no doctor has been assigned to the patient
+	 */
+	public int getAssignedDoctor(String ssn) throws NoSuchPatient, NoSuchDoctor {
+		// TODO Complete method
+		return -1;
+	}
+	
+	/**
+	 * Retrieves the patients assigned to a doctor
+	 * 
+	 * @param id ID of the doctor
+	 * @return collection of patient SSN
+	 * @throws NoSuchDoctor in case the {@code id} does not match any doctor 
+	 */
+	public Collection<String> getAssignedPatients(int id) throws NoSuchDoctor {
+		// TODO Complete method
+		return null;
+	}
+
+
+	/**
+	 * Loads data about doctors and patients from the given stream.
+	 * <p>
+	 * The text file is organized by rows, each row contains info about
+	 * either a patient or a doctor.</p>
+	 * <p>
+	 * Rows containing a patient's info begin with letter {@code "P"} followed by first name,
+	 * last name, and SSN. Rows containing doctor's info start with letter {@code "M"},
+	 * followed by badge ID, first name, last name, SSN, and specialization.<br>
+	 * The elements on a line are separated by the {@code ';'} character possibly
+	 * surrounded by spaces that should be ignored.</p>
+	 * <p>
+	 * In case of error in the data present on a given row, the method should be able
+	 * to ignore the row and skip to the next one.<br>
+
+	 * 
+	 * @param path the path of the required file
+	 * @throws IOException in case of IO error
+	 */
+	public void loadData(Reader reader) throws IOException {
+		// TODO Complete method
+		
+	}
+
+
+
 
 	/**
 	 * Retrieves the collection of doctors that have no patient at all, sorted in alphabetic order.
 	 * 
 	 * @return the collection of doctors with no patient sorted in alphabetic order (last name and then first name)
 	 */
-	public Collection<Doctor> idleDoctors(){
+	public Collection<Integer> idleDoctors(){
 		// TODO Complete method
 		return null;
 	}
@@ -88,7 +145,7 @@ public class Clinic {
 	 * 
 	 * @return  the collection of doctors
 	 */
-	public Collection<Doctor> busyDoctors(){
+	public Collection<Integer> busyDoctors(){
 		// TODO Complete method
 		return null;
 	}
@@ -124,16 +181,4 @@ public class Clinic {
 		return null;
 	}
 	
-	/**
-	 * Loads data about doctors and patients from the given file.
-	 * 
-	 * @param path the path of the required file
-	 * @throws IOException in case of IO error
-	 */
-	public void loadData(String path) throws IOException {
-		// TODO Complete method
-		
-	}
-
-
 }

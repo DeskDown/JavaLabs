@@ -1,20 +1,22 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Laboratorio - Ambulatorio</title>
-  <meta name="revision" content="May 21, 2018">
-  <meta name="author" content="Marco Torchiano">
-  <link href=".css.css" rel="stylesheet" type="text/css">
+	<title>Laboratorio - Ambulatorio</title>
+	<meat charset="utf-8">
+	<meta name="revision" content="May 21, 2018">
+	<meta name="author" content="Marco Torchiano">
+	<link href=".css.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 
 <h1>Ambulatorio</h1>
 
-<p>Realizzare un sistema per gestire i pazienti di un ambulatorio.
-<br>
-Le classi sono contenute nel package <i>clinic</i>.</p>
+<p>Realizzare un sistema per gestire i pazienti di un ambulatorio medico.
+Le classi sono contenute nel package <b>clinic</b>.</p>
+<p>&Egrave; disponibile un esempio di uso del sistema nella class <b>clinic.demo.DemoApp</b>
+</p>
 
- 
+
 <h2>R1: Pazienti</h2>
 <p>La classe principale del programma &egrave; <b>Clinic</b>.</p>
 
@@ -23,8 +25,9 @@ I pazienti sono caratterizzati da nome, cognome, e dal codice fiscale (SSN).
 Nuovi pazienti possono essere aggiunti tamite il metodo <b>addPatient()</b>.</p>
 <p>
 Le informazioni su un paziente possono essere recuperate tramite il metodo
-<b>getPatient()</b> che, dato un codice fiscale restituisce un oggetto di tipo <b>Person</b>.
-Tale classe fornisce i metodi getter per SSN, nome e cognome.</p>
+<b>getPatient()</b> che, dato un codice fiscale restituisce una stringa con il seguente
+formato <i>"&lt;Last&gt; &lt;First&gt; (&lt;SSN&gt;)"</i>.
+</p>
 <p>
 Se il paziente non esiste viene generata l'eccezione <b>NoSuchPatient</b>.
 </p>
@@ -35,8 +38,8 @@ I dottori sono caratterizzati da nome, cognome, SSN, numero di badge e dalla spe
 (es. "cardiologo", "dentista"). &Egrave; possibile aggiungere un nuovo dottore
 tramite il metodo <b>addDoctor()</b>.</p>
 <p>
-Il meotdo <b>getDoctor()</b>, dato il numero di badge restituisce un oggetto di classe <b>Doctor</b>.
-Tale classe estende <i>Person</i> e fornisce i getter per il badge e la specialit&agrave;.</p>
+Il meotdo <b>getDoctor()</b>, dato il numero di badge restituisce una stringa con il segiente
+formato <i>"&lt;Last&gt; &lt;First&gt; (&lt;SSN&gt;) [&lt;ID&gt;]: &lt;Specialization&gt;"</i>.</p>
 <p>
 Se il dottore non esiste viene generata l'eccezione <b>NoSuchDoctor</b>.</p>
 <p> 
@@ -51,17 +54,20 @@ parametri il codice fiscale del paziente ed il numero di badge del dottore.
 Se il dottore non esiste, viene generate l'eccezione <b>NoSuchDoctor</b>, mentre
 se il paziente non esiste viene generata l'eccezione <b>NoSuchPatient</b>.</p>
 <p>
-Tramite il metodo  <b>getDoctor()</b> della classe <i>Person</i> &egrave;
-possibile ottenere un riferimento al dottore assegnato alla persona.</p>
+Tramite il metodo  <b>getAssignedDoctor()</b> che accetta il codice fiscale di un paziente;
+possibile ottenere il codice del dottore assegnato al paziente. Se il paziente non esiste
+viene lanciata un'eccezione di <i>NoSuchPatient</i>; se il paziente non &egrave; stato
+assegnato ad alcun dottore viene lanciata un'eccezione <i>NoSuchDoctor</i>.</p>
 <p>
-Il metodo <b>getPatients()</b> della classe <i>Doctor</i> restituisce
-la collezione di pazienti del dottore.</p>
+Il metodo <b>getPatients()</b> accetta il codice di un dottore e restituisce
+la collezione dei codici fiscali dei pazienti assegnati al dottore. Se il codice
+non corrisponde ad alcun dottore, viene lanciata un'eccazione <i>NoSuchDoctor</i>.</p>
 
 
 <h2>R4: Lettura</h2>
 
-<p>Il metodo <b>loadData()</b> della classe <i>Clinic</i> accetta un path
-e legge dal corrispondente file le informazioni su pazienti e dottori.</p>
+<p>Il metodo <b>loadData()</b> della classe <i>Clinic</i> accetta un Reader
+e legge le informazioni su pazienti e dottori.</p>
 <p> 
 Il file &egrave; organizzato per righe; ogni riga contiene informazioni
 relative a pazienti o a dottori.</p>
@@ -70,7 +76,8 @@ Le righe contenenti informazioni sulle persone iniziano con la lettera "<i>P</i>
 seguita da nome, cognome, e SSN. Le righe che descrivono i dottori iniziano
 con la lettera "<i>M</i>", seguita da numero di badge, nome, cognome, SSN e specialit&agrave;.</p>
 <p>
-Tutti gli elementi su una linea sono separati dal carattere "<i>;</i>".</p>
+Tutti gli elementi su una linea sono separati dal carattere "<i>;</i>", eventualmente
+circondato da spazi che devono essere ignorati.</p>
 <p>
 In caso di errore nei contenuti del file, il metodo ignora la linea e passa a quella successiva.
 </p>
