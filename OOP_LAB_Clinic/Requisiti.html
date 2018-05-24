@@ -59,7 +59,7 @@ possibile ottenere il codice del dottore assegnato al paziente. Se il paziente n
 viene lanciata un'eccezione di <i>NoSuchPatient</i>; se il paziente non &egrave; stato
 assegnato ad alcun dottore viene lanciata un'eccezione <i>NoSuchDoctor</i>.</p>
 <p>
-Il metodo <b>getPatients()</b> accetta il codice di un dottore e restituisce
+Il metodo <b>getAssignedPatients()</b> accetta il codice di un dottore e restituisce
 la collezione dei codici fiscali dei pazienti assegnati al dottore. Se il codice
 non corrisponde ad alcun dottore, viene lanciata un'eccazione <i>NoSuchDoctor</i>.</p>
 
@@ -87,7 +87,7 @@ In caso di errore nei contenuti del file, il metodo ignora la linea e passa a qu
 <h2>R5: Statistiche</h2>
 
 <p>Il metodo <b>idleDoctors()</b> resituisce una collezione con tutti i dottori
-che non hanno pazienti, ordinata in ordine alfabetico.</p>
+che non hanno pazienti, ordinata in ordine alfabetico (prima per cognome e poi per nome).</p>
 <p>
 Il metodo <b>busyDoctors()</b> restituisce la collezione dei dottori che hanno
 un numero di pazienti superiore alla media.</p>

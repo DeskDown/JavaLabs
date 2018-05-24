@@ -1,15 +1,12 @@
 package clinic;
 
-import static java.util.stream.Collectors.toList;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.util.Collection;
 
 /**
- * Represent a clinic with patients and doctors.
+ * Represents a clinic with patients and doctors.
  * 
- *
  */
 public class Clinic {
 
