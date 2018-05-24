@@ -2,8 +2,8 @@
 <html>
 <head>
   <title>Lab - Medical Clinic</title>
-  <meat charset="utf-8">
-  <meta name="revision" content="May 22, 2018">
+  <meta charset="utf-8">
+  <meta name="revision" content="May 24, 2018">
   <meta name="author" content="Marco Torchiano">
   <link href=".css.css" rel="stylesheet" type="text/css">
 </head>
@@ -57,7 +57,7 @@ Further, if the patient does not exist, exception <b>NoSuchPatient</b> is thrown
 <p>
 By means of method <b>getAssignedDoctor()</b> that accepts a patient SSN,
 it is possible to obtain the ID of the Doctor assigned to that person.
-If the patient does not exist a <i>NoSuchPatient</i> exception is thrown. It there is no
+If the patient does not exist a <i>NoSuchPatient</i> exception is thrown. If there is no
 doctor assigned to the patient a <i>NoSuchDoctor</i> is thrown.</p>
 <p>
 The method <b>getAssignedPatients()</b> accepts a doctor ID and
@@ -93,9 +93,8 @@ doctors that have no patient at all, sorted in alphabetic order (last name and t
 The method <b>busyDoctors()</b> returns the collection of
 doctors that are assigned a number of patients larger than the average.</p>
 <p>
-The method <b>doctorsByNumPatients()</b> returns list of strings
-containing the name of the doctor and the relative number of patients
-with the relative number of patients, sorted by decreasing number.<br>
+The method <b>doctorsByNumPatients()</b> returns a list of strings
+containing the name of the doctor and the relative number of patients, sorted by decreasing number.<br>
 The string must be formatted as "<i>### : ID SURNAME NAME</i>" where <i>###</i>
 represent the number of patients (printed on three characters).</p>
 <p>
