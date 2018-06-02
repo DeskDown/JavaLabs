@@ -1,13 +1,19 @@
 package it.polito.po.test;
-import junit.framework.TestCase;
+
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import clinic.*;
 
-public class TestR1_Patient extends TestCase {
+public class TestR1_Patient {
+	// "<Last> <First> (<SSN>)"
+	static Pattern patientFormat = Pattern.compile(
+			"\\s*([a-zA-Z',-]+)\\s*([a-zA-Z',-]+)\\s*\\(\\s*(\\w{16})\\s*\\)\\s*");
 
-  public TestR1_Patient(String arg0) {
-    super(arg0);
-  }
-
+  @Test
   public void AddPatient() throws NoSuchPatient {
     Clinic s = new Clinic();
 
@@ -16,12 +22,19 @@ public class TestR1_Patient extends TestCase {
     String surname = "Reds";
     s.addPatient(name, surname, ssn);
 
-    Person p = s.getPatient(ssn);
+    String p = s.getPatient(ssn);
+    
+    assertNotNull("Missing patient info",p);
+    
+    Matcher m = patientFormat.matcher(p);
+    assertTrue("Wrong format for patient string '" + p + "'",m.matches());
+    assertEquals("Wrong in patient info", name, m.group(2));
+    assertEquals("Wrong in patient info", surname, m.group(1));
+    assertEquals("Wrong SSN in patient info", ssn, m.group(3));
 
-    assertEquals(name, p.getFirst());
-    assertEquals(surname, p.getLast());
-  }
+}
 
+  @Test
   public void testNotFoundEmpty() {
     Clinic s = new Clinic();
 
@@ -35,6 +48,7 @@ public class TestR1_Patient extends TestCase {
     }
   }
 
+  @Test
   public void testNotFound() {
     Clinic s = new Clinic();
 
@@ -52,36 +66,5 @@ public class TestR1_Patient extends TestCase {
     }
   }
 
-  public void testGetNull() {
-    Clinic s = new Clinic();
-
-    String ssn = "THEPID12I99F181K";
-    String name = "Giova";
-    String surname = "Reds";
-
-    s.addPatient(name, surname, ssn);
-
-    try {
-      Person p = s.getPatient(null);
-      assertSame(null, p);
-    } catch (NoSuchPatient e) {
-      assertTrue(true);
-    }
-  }
-
-  public void testInsertDouble() throws NoSuchPatient {
-    Clinic s = new Clinic();
-
-    String ssn = "THEPID12I99F181K";
-    String name = "Giova";
-    String surname = "Reds";
-
-    s.addPatient(name + "X", surname + "Y", ssn);
-    s.addPatient(name, surname, ssn);
-
-    Person p = s.getPatient(ssn);
-
-    assertEquals(name, p.getFirst());
-  }
 
 }

@@ -1,129 +1,115 @@
 package it.polito.po.test;
-import java.util.Collection;
 
 import clinic.*;
-import junit.framework.TestCase;
+import java.util.Collection;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
+public class TestR3_AssignPatient {
 
-
-public class TestR3_AssignPatient extends TestCase {
-
-  public TestR3_AssignPatient(String arg0) {
-    super(arg0);
-  }
-
-  
-	public void testAssignDoctor() throws NoSuchPatient, NoSuchDoctor{
+	@Test
+	public void testAssignDoctor() throws NoSuchPatient, NoSuchDoctor {
 		Clinic s = new Clinic();
-  	
+
 		String ssn = "THEPID12I99F181K";
-		s.addPatient("Giova","Reds",ssn);
+		s.addPatient("Giova", "Reds", ssn);
 
 		int id = 124;
-		s.addDoctor("Mario", "White", "THEFIT12I97F181Z",id, "Surgeon");		
-		s.assignPatientToDoctor(ssn,id);
-		
-		Person p = s.getPatient(ssn);
-		Doctor m = p.getDoctor();
-		
-		int result = m.getId();
-		
-		assertEquals(id,result);
+		s.addDoctor("Mario", "White", "THEFIT12I97F181Z", id, "Surgeon");
+		s.assignPatientToDoctor(ssn, id);
+
+		int res = s.getAssignedDoctor(ssn);
+
+		assertEquals("Wrong sssigned doctor id.", id, res);
 	}
-  
-	public void testNoAssignedDoctor() throws NoSuchPatient{
+
+	@Test
+	public void testNoAssignedDoctor() throws NoSuchPatient {
 		Clinic s = new Clinic();
-  	
-		String ssn = "THEPID12I99F181K";
-		s.addPatient("Giova","Reds",ssn);
 
-		Person p = s.getPatient(ssn);
-		
-		Doctor m = p.getDoctor();
-		
-		assertSame(null,m);	
+		String ssn = "THEPID12I99F181K";
+		s.addPatient("Giova", "Reds", ssn);
+
+		try {
+			s.getAssignedDoctor(ssn);
+			fail("There should be no doctor assigned");
+		} catch (NoSuchDoctor e) {
+			// OK
+		}
 	}
-  
-	public void testDuplicateAssignment() throws NoSuchPatient, NoSuchDoctor{
+
+	@Test
+	public void testList() throws NoSuchPatient, NoSuchDoctor {
 		Clinic s = new Clinic();
-  	
-		String ssn = "THEPID12I99F181K";
-		s.addPatient("Giova","Reds",ssn);
 
-		int id1 = 1234;
-		s.addDoctor("Mario", "White", "THEFIT12I97F181Z",id1, "Surgeon");		
-		s.assignPatientToDoctor(ssn,id1);
-		
-		int id2 = 5678;
-		s.addDoctor("Joseph", "Greens", "JSHGRN18I93F181Z",id2, "Surgeon");		
-		s.assignPatientToDoctor(ssn,id2);
+		String ssn1 = "THEPID12I99F181K";
+		s.addPatient("Giova", "Reds", ssn1);
 
-		Person p = s.getPatient(ssn);
-		Doctor m = p.getDoctor();
-		
-		int result = m.getId();
-		
-		assertEquals("The last assignment should have effect",
-					id2,result);
+		String ssn2 = "BLKSRS11I88F981K";
+		s.addPatient("Sirius", "Black", ssn2);
+
+		int id = 124;
+		s.addDoctor("Mario", "White", "THEFIT12I97F181Z", id, "Surgeon");
+		s.assignPatientToDoctor(ssn1, id);
+		s.assignPatientToDoctor(ssn2, id);
+
+		Collection<String> patients = s.getAssignedPatients(id);
+
+		assertNotNull("Missing list of patients assigned to doctor White.",patients);
+		assertEquals("Patient list should containt two patients.",2,patients.size());
+		assertTrue(patients.contains(ssn1));
+		assertTrue(patients.contains(ssn2));
 	}
 
-	  public void testList() throws NoSuchPatient, NoSuchDoctor{
-			Clinic s = new Clinic();
-	  	
-			String ssn1 = "THEPID12I99F181K";
-			s.addPatient("Giova","Reds",ssn1);
+	@Test
+	public void testNoList() throws NoSuchPatient, NoSuchDoctor {
+		Clinic s = new Clinic();
 
-			String ssn2 = "BLKSRS11I88F981K";
-			s.addPatient("Sirius","Black",ssn2);
+		String ssn1 = "THEPID12I99F181K";
+		s.addPatient("Giova", "Reds", ssn1);
 
-			int id = 124;
-			s.addDoctor("Mario", "White", "THEFIT12I97F181Z",id, "Surgeon");		
-			s.assignPatientToDoctor(ssn1,id);
-			s.assignPatientToDoctor(ssn2,id);
-			
-			Person p1 = s.getPatient(ssn1);
-			Person p2 = s.getPatient(ssn2);
+		String ssn2 = "BLKSRS11I88F981K";
+		s.addPatient("Sirius", "Black", ssn2);
 
-			Doctor m = s.getDoctor(id);
-			
-			Collection<Person> patients = m.getPatients();
-			
-		    assertTrue(patients.contains(p1));
-			assertTrue(patients.contains(p2));
-	  }
-	  
-//	  public void testSortedList() throws NoSuchPatient, NoSuchDoctor{
-//			Clinic s = new Clinic();
-//	  	
-//			String cf3 = "RSSPLA13I88F981K";
-//			s.addPatient("Paolo","Reds",cf3);
-//
-//			String cf1 = "THEPID12I99F181K";
-//			s.addPatient("Giova","Reds",cf1);
-//
-//			String cf2 = "BLKSRS11I88F981K";
-//			s.addPatient("Sirius","Black",cf2);
-//
-//			int mat = 123;
-//			s.addDoctor("Mario", "White", "THEFIT12I97F181Z",mat, "Dentist");		
-//			s.assignPatientToDoctor(cf1,mat);
-//			s.assignPatientToDoctor(cf2,mat);
-//			s.assignPatientToDoctor(cf3,mat);
-//			
-//			Doctor m = s.getDoctor(mat);
-//			
-//			Collection<Person> pazienti = m.getPatients();
-//			Iterator<Person> it = pazienti.iterator();
-//			
-//	  		Person p1 = (Person)it.next();
-//			Person p2 = (Person)it.next();
-//			Person p3 = (Person)it.next();
-//			
-//			assertEquals("Black",p1.getLast());
-//			assertEquals("Reds",p2.getLast());
-//			assertEquals("Reds",p3.getLast());
-//			assertEquals("Paolo",p3.getFirst());
-//	  }
+		int id = 124;
+		s.addDoctor("Mario", "White", "THEFIT12I97F181Z", id, "Surgeon");
 
+		Collection<String> patients = s.getAssignedPatients(id);
+
+		assertNotNull("Missing list of patients assigned to doctor White.",patients);
+		assertEquals("Patient list should be empty.",0,patients.size());
+	}
+	// public void testSortedList() throws NoSuchPatient, NoSuchDoctor{
+	// Clinic s = new Clinic();
+	//
+	// String cf3 = "RSSPLA13I88F981K";
+	// s.addPatient("Paolo","Reds",cf3);
+	//
+	// String cf1 = "THEPID12I99F181K";
+	// s.addPatient("Giova","Reds",cf1);
+	//
+	// String cf2 = "BLKSRS11I88F981K";
+	// s.addPatient("Sirius","Black",cf2);
+	//
+	// int mat = 123;
+	// s.addDoctor("Mario", "White", "THEFIT12I97F181Z",mat, "Dentist");
+	// s.assignPatientToDoctor(cf1,mat);
+	// s.assignPatientToDoctor(cf2,mat);
+	// s.assignPatientToDoctor(cf3,mat);
+	//
+	// Doctor m = s.getDoctor(mat);
+	//
+	// Collection<Person> pazienti = m.getPatients();
+	// Iterator<Person> it = pazienti.iterator();
+	//
+	// Person p1 = (Person)it.next();
+	// Person p2 = (Person)it.next();
+	// Person p3 = (Person)it.next();
+	//
+	// assertEquals("Black",p1.getLast());
+	// assertEquals("Reds",p2.getLast());
+	// assertEquals("Reds",p3.getLast());
+	// assertEquals("Paolo",p3.getFirst());
+	// }
 
 }
