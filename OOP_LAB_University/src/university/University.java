@@ -122,7 +122,8 @@ public class University {
 	 */
 	public String listAttendees(int courseCode){
 		//TODO: to be implemented
-		return this.CourseList.get(courseCode).getStudents().stream().map(Object::toString).collect(Collectors.joining("\n"));
+		return this.CourseList.get(courseCode).getStudents().stream()
+				.map(Object::toString).collect(Collectors.joining("\n"));
 		
 	}
 
@@ -133,6 +134,8 @@ public class University {
 	 */
 	public String studyPlan(int studentID){
 		//TODO: to be implemented
-		return null;
+		return this.StudentList.get(studentID).getListOfCourses().stream().
+				map(Object::toString).collect(Collectors.joining("\n"));
+		
 	}
 }
