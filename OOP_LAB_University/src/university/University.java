@@ -1,13 +1,25 @@
 package university;
 
+import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 public class University {
 
+	private String name = new String();
+	private String Rname = new String();
+	private Map <Integer,Student> StudentList = new HashMap();
+	private Map <Integer,Courses> CourseList = new HashMap();
+	private Integer Cid = 10;	
+	private Integer Sid = 10000;
 	/**
 	 * Constructor
 	 * @param name name of the university
 	 */
 	public University(String name){
 		//TODO: to be implemented
+		super();
+		this.name = name;
 	}
 	
 	/**
@@ -16,7 +28,7 @@ public class University {
 	 */
 	public String getName(){
 		//TODO: to be implemented
-		return null;
+		return this.name;
 	}
 	
 	/**
@@ -26,6 +38,7 @@ public class University {
 	 */
 	public void setRector(String first, String last){
 		//TODO: to be implemented
+		this.Rname = first + " " + last;
 	}
 	
 	/**
@@ -34,7 +47,7 @@ public class University {
 	 */
 	public String getRector(){
 		//TODO: to be implemented
-		return null;
+		return Rname;
 	}
 	
 	/**
@@ -45,9 +58,18 @@ public class University {
 	 */
 	public int enroll(String first, String last){
 		//TODO: to be implemented
-		return -1;
+		
+		Student s = new Student(first, last, Sid);
+		IncreaseSid();
+		StudentList.put(s.getID(),s);
+		return s.getID();
 	}
 	
+	private void IncreaseSid() {
+		// TODO Auto-generated method stub
+		this.Sid ++;
+	}
+
 	/**
 	 * Retrieves the information for a given student
 	 * @param id the id of the student
@@ -55,7 +77,7 @@ public class University {
 	 */
 	public String student(int id){
 		//TODO: to be implemented
-		return null;
+		return StudentList.get(id).toString();
 	}
 	
 	/**
@@ -66,7 +88,10 @@ public class University {
 	 */
 	public int activate(String title, String teacher){
 		//TODO: to be implemented
-		return -1;
+		Courses C = new Courses(title, teacher, Cid);
+		this.Cid ++;
+		CourseList.put(C.getCourseCode(), C);
+		return C.getCourseCode();
 	}
 	
 	/**
@@ -76,7 +101,7 @@ public class University {
 	 */
 	public String course(int code){
 		//TODO: to be implemented
-		return null;
+		return CourseList.get(code).toString();
 	}
 	
 	/**
@@ -86,6 +111,8 @@ public class University {
 	 */
 	public void register(int studentID, int courseCode){
 		//TODO: to be implemented
+		this.StudentList.get(studentID).setListOfCourses(this.CourseList.get(courseCode));
+		this.CourseList.get(courseCode).addStudent(this.StudentList.get(studentID));
 	}
 	
 	/**
@@ -95,7 +122,8 @@ public class University {
 	 */
 	public String listAttendees(int courseCode){
 		//TODO: to be implemented
-		return null;
+		return this.CourseList.get(courseCode).getStudents().stream().map(Object::toString).collect(Collectors.joining("\n"));
+		
 	}
 
 	/**
